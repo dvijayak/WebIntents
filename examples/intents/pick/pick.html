@@ -16,7 +16,7 @@
 
     var returnImage = function(e) {
       if(!!window.intent) {
-        // Do some magic to return the raw data.
+        // Return the raw data.
         var data = [ getImageData(e.target) ]; 
 
         window.intent.postResult(data);
@@ -27,7 +27,7 @@
    attachEventListener(window, "load", function() {
      var img1 = document.getElementById("img1");
      var img2 = document.getElementById("img2");
-     var img3 = document.getElementById("img3");
+     var img3 = document.getElementById("img3");              
 
      attachEventListener(img1, "click", returnImage, false);
      attachEventListener(img2, "click", returnImage, false);
@@ -36,25 +36,11 @@
 
   </script>
   <body>
-    <h1>Kinlan's Cloud File Store</h1>
+    <h1>My Cloud File Store</h1>
     <p>Select a file for the app to use</p>
     <img id="img1" src="images/kitten1.jpg">
     <img id="img2" src="images/kitten2.jpg">
     <img id="img3" src="images/kitten3.jpg">
     <h2>Code</h2>
-    <pre>var getImageData = function(img) {
-  ...
-  return ......;
-};
-
-var returnImage = function(e) {
-  if(!!window.intent) {
-    // Do some magic to return the raw data.
-    var data = [ getImageData(e.target) ] ; 
-  
-    window.intent.postResult(data);
-    setTimeout(function() { window.close();}, 500);
-  }
-};</pre>
   </body>
 </html>

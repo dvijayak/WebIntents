@@ -116,14 +116,14 @@
   };
 
   var Intent = function(action, type, data) {
-    var me = this;
+    var me = this; // Stores a reference because 'this' is different in nested functions
     this.action = action;
     this.type = type;
     this.data = data;
 
     this.postResult = function (data) {
       var returnIntent = new Intent();
-      returnIntent._id = me._id;
+      returnIntent._id = me._id; // 'this' here would be a reference to this.postResult - not Intent; hence we need me
       returnIntent.action = me.action;
       returnIntent.data = data;
     

@@ -17,7 +17,7 @@
           return false;
         });
   
-        var intentResponse = function (intentData) {
+        var intentResponse = function (intentData) {          
           var output = document.getElementById("output");
           output.src = intentData.data[0];
           focus();
@@ -30,18 +30,6 @@
     <button id="pickImage">Pick an Image</button>
     <h3>Response will appear here:</h3> 
     <img id="output" />
-
-    <h3>Code</h3>
-    <pre>var intent = new Intent();
-intent.action = "http://webintents.org/pick";
-intent.type = "image/*";
-
-window.navigator.startActivity(intent, intentResponse);
-
-var intentResponse = function (intentData) {
-  var output = document.getElementById("output");
-  output.src = intentData.data.images[0];
-};</pre>
   </body>
 </html>
 

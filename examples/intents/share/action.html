@@ -16,6 +16,8 @@
           intent.type = "text/uri-list";
           intent.data = [ url ];
 
+          console.log("ASDASD");
+
           window.navigator.startActivity(intent);
           return false;
         }, false);
@@ -65,25 +67,13 @@
     <section>
       <h2>Share a link</h2>
     <input id="url" name="url" type="url" value="http://paul.kinlan.me" />
-    <button id="shareLink">Share link</button>
-    <pre>var intent = new Intent();
-intent.action = "http://webintents.org/share";
-intent.type = "text/uri-list";
-intent.data = { uris : [ url ] };
-
-window.navigator.startActivity(intent);</pre>
+    <button id="shareLink">Share link</button>    
     </section>
     <section>
       <h2>Share an image</h2>
       <p>Pick an image to share.</p>
       <input id="imageList" type="file" accept="image/*" />
-      <button id="shareImage">Share Image</button>
-  <pre>var intent = new Intent();
-intent.action = "http://webintents.org/share";
-intent.type = "image/*";
-intent.data = { images : [ imageData ] };
-            
-window.navigator.startActivity(intent);</pre>
+      <button id="shareImage">Share Image</button>  
       </section>
   </body>
 </html>

@@ -3,6 +3,8 @@
   <head>
     <title>Intent: Shorten</title>
     <script src="/lib/webintents.debug.js"></script>
+    <script src="/lib/webintents.min.js"></script>
+    <script src="/lib/webintents-prefix.js"></script>
     <script src="/lib/events.js"></script>
     <script src="/lib/common.js"></script>
     <intent 
@@ -27,6 +29,7 @@
         }, false);
 
         var intentResponse = function (intentData) {
+          console.log("HELLO");
           var output = document.getElementById("output");
           setText(output, intentData.data[0]);
           focus();
