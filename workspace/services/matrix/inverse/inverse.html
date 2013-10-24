@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <title>Invert Matrix</title>
+  <script src="/lib/webintents.debug.js"></script>
+  <script src="/lib/events.js"></script>
+  <script src="/lib/common.js"></script>
+  <script src="/lib/gl-matrix.js"></script>
+  <script>
+    attachEventListener(window, "load", function(e) {
+      var output = document.getElementById("output");
+      console.log(e.target);
+      
+      if(!!window.intent) {         
+        if(intent.data instanceof Array) {    
+          var data1 = intent.data[0];            
+          var length = data1.length;
+          var matrix1 = [];                           
+          for (var i = 0; i < length; i++) {
+            var element1 = parseInt(data1[i]);              
+            if (!isNaN(element1)) {
+              matrix1.push(element1);
+            }
+            else {
+              matrix1.push(0);
+            }                        
+          }                            
+          var sum = mat3.invert(mat3.create(), matrix1);          
+          var result = [ (sum !== null) ? mat3.str(sum) : "Inverse does not exist"];          
+          setText(output, result[0]); 
+          setTimeout(function() { window.close();}, 2000);        
+
+          attachEventListener(window, "beforeunload", function() {                         
+            window.intent.postResult(result);
+          });
+        }
+        else {          
+          setText(output, "Operation Failed");
+          setTimeout(function() { window.close();}, 2000);
+
+          attachEventListener(window, "unload", function() { 
+            window.intent.postResult([ "Operation Failed" ]);
+          });
+        }
+      }
+    }, false);  
+  
+  </script>
+  <body>
+    <h1>Matrix Summation</h1>    
+    <p>Here is the result of the addition of the inputted matrices:</p>
+    <div id="output"></div>
+  </body>
+</html>

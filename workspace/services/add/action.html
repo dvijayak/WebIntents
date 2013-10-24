@@ -1,0 +1,52 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Pick</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <script src="/lib/events.js"></script>
+    <script src="/lib/common.js"></script>
+    <script>
+      attachEventListener(window, "load", function() {
+
+        var addObjects = document.getElementById("addObjects");
+        attachEventListener(addObjects, "click", function() {
+          var input = document.getElementById("add").value;
+          
+          var tokens = input.split(" ");    
+          // console.log(tokens);      
+
+          var intent = new Intent();
+          intent.action = "http://webintents.org/math";
+          intent.type = "text/*";
+          intent.data = tokens;
+
+          window.navigator.startActivity(intent, intentResponse);
+          return false;
+        });
+
+        var intentResponse = function (intentData) {
+          var output = document.getElementById("output");
+          console.log(intentData.data);
+          setText(output, intentData.data[0] + "\n" + intentData.data[1]);
+          focus();
+        };
+      }, false);
+
+    </script>  
+  </head>
+  <body>    
+    <h1>Client App</h1>
+    <p>This is an external application that needs to add a few arbitrary objects. It has no prior knowledge of any other application that can offer such a feature.</p>
+    
+    <section>
+    <h2>Add a few objects together</h2>
+    <input id="add" name="add" type="text" value="This is a String but let us add 2 + 28 + 31 + 59 and see what happens." />
+    <button id="addObjects">Add Objects</button>    
+
+    <h3>Response will appear here:</h3> 
+    <div id="output" />  
+    </section>    
+  </body>
+</html>
+
