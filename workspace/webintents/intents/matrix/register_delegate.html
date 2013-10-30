@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/webintents/lib/webintents.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>   
+    <script>
+      $(function() {
+        setTimeout(function() { window.close();}, 599);        
+      });
+    </script>
+
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="http://localhost:5984/intents/math_matrix/add.html" 
+      title="Add 3x3 Matrices" 
+      disposition="window|inline" />    
+
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="subtract/subtract.html" 
+      title="Subtract 3x3 Matrices" 
+      disposition="window|inline" />    
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="multiply/multiply.html" 
+      title="Multiply 3x3 Matrices" 
+      disposition="window|inline" />   
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="inverse/inverse.html" 
+      title="Invert a 3x3 Matrix" 
+      disposition="window|inline" />
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="determinant/determinant.html" 
+      title="Compute 3x3 Matrix Determinant" 
+      disposition="window|inline" />  
+  </head>
+
+
+  <body>    
+    <h1>Services</h1>
+     <p>Registering services...please wait...<b>this window will close automatically</b>.</p>
+  </body>
+</html>

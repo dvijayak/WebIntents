@@ -1,0 +1,62 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/webintents/lib/webintents.js"></script>
+    <script src="/webintents/lib/events.js"></script>
+    <script src="/webintents/lib/common.js"></script>
+    <script>
+      attachEventListener(window, "load", function() {
+
+        var computeMatrices = document.getElementById("computeMatrices");
+        attachEventListener(computeMatrices, "click", function() {
+          var matrix1 = document.getElementById("matrix1").value;
+          var matrix2 = document.getElementById("matrix2").value;
+          
+          var matrix1Tokens = matrix1.split(" ");    
+          var matrix2Tokens = matrix2.split(" ");    
+          // console.log(tokens);      
+
+          var intent = new Intent();
+          intent.action = "http://webintents.org/math/matrix";
+          intent.type = "text/*";
+          intent.data = [ matrix1Tokens, matrix2Tokens ];
+
+          window.navigator.startActivity(intent, intentResponse);
+          return false;
+        });
+
+        var intentResponse = function (intentData) {
+          var output = document.getElementById("output");
+          console.log(intentData.data);
+          setText(output, intentData.data[0]);
+          focus();
+        };
+      }, false);
+
+    </script>  
+  </head>
+  <body>    
+    <h1>Client App</h1>
+    <p>This is an external application that needs to perform operations on maximum two 3x3 matrices. It has no prior knowledge of any other application that can offer such a feature.</p>
+    
+    <section>
+    <h2>Enter the 3x3 matrix operands and perform a matrix operation</h2>
+    <input id="matrix1" name="matrix1" type="text" value="1 2 3 4 5 6 7 8 9" />
+    <input id="matrix2" name="matrix2" type="text" value="5 2 7 8 9 3 3 1 7" />
+    <!-- <select>
+      <option value="add" default="true">Add</option>
+      <option value="subtract">Subtract</option>
+      <option value="multiply">Multiply</option>
+      <option value="inverse">Inverse</option>
+      <option value="determinant">Determinant</option>
+    </select> -->
+    <button id="computeMatrices">Compute</button>    
+
+    <h3>Response will appear here:</h3> 
+    <div id="output" />  
+    </section>    
+  </body>
+</html>
+

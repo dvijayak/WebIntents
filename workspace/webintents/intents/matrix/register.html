@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" id="viewport" content="height=device-height,width=device-width,user-scalable=no" />
+        <title>Register Intent</title>
+        <link href="css/general.css" rel="stylesheet">
+        <script src="/webintents/lib/webintents.js"></script>    
+        <script src="/webintents/lib/events.js"></script>  
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>                    
+        <!-- Bootstrap -->
+        <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" rel="stylesheet">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <!-- --------- -->        
+        <style>            
+            body {
+                padding-top: 80px;
+            }
+        
+            #formControls {
+                width: 500px;
+                margin: 0 auto;
+                padding: 0 20px 0 20px;            
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                   -moz-border-radius: 5px;
+                        border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                        box-shadow: 0 1px 2px rgba(0,0,0,.05);      
+            }
+     
+            #header h1 {
+                text-align: center;
+                color: #999999;
+            }            
+        </style>
+    </head>
+    <body>
+    <div id="header" class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">        
+        <h1>Web Intents</h1>
+      </div>      
+    </div>
+        
+        <div id="formControls" class="container">      
+            <script>
+              // Will contain the uploaded file data
+              fileData = {};  
+              $(function () {
+                $( "#upload" ).change(function(evt) {
+                  // var files = evt.target.files;
+                  
+                  // var reader = new FileReader();
+                  // for (var i = 0, file; file = files[i]; i++) {
+                  //   // Only work with .js filesz
+                  //   if (file.type.match('text.javascript')) {
+                  //     console.log(file.name);
+
+                  //     reader.onload = (function (theFile) {
+
+                  //     });
+
+                  //     reader.readAsText(file);
+                  //   }
+                  // }
+                  // Only work with one file for now
+                  var file = evt.target.files[0];                  
+
+                  var reader = new FileReader();
+
+                  // Closure to capture the file information
+                  reader.onload = function (theFile) {
+                    fileData = {name: file.name, mime: file.type, data: theFile.target.result};
+                  };                  
+
+                  // reader.readAsDataURL(file);
+                  reader.readAsText(file);
+                });
+
+                $( "#register" ).click(function () {
+                  if(!!!fileData) {
+                      alert("Please choose the file containing the service code.");
+                      return false; 
+                  }
+
+                  // Prepare service attributes                  
+                  var action = $( "#action").val();
+                  var id =  action.replace("/", "_") + "_" + ((fileData.name.split("."))[0]);
+
+                  console.log(id);
+                  var type = $( "#type" ).val();
+                  var title = $( "#title" ).val();
+                  var description = $( "#description" ).val();
+
+                  var host = "http://localhost:5984";
+                  var db = "intents";
+                  var href = host + "/" + db + "/" + 
+                    id + "/" + fileData.name;
+
+                  // Create JSON object
+                  var newIntent = {
+                    action: action,
+                    type: type,
+                    href: href,
+                    title: title,
+                    description: description,
+                    disposition: "window|inline",                    
+                    _attachments: fileData.data
+                  };                  
+
+                  console.log(fileData);
+                  console.log(newIntent);                
+                  // Post to register.php  
+                  $.ajax({
+                    type: "POST",
+                    url: "register.php",
+                    contentType: "application/json: charset=utf-8",
+                    data: JSON.stringify(newIntent),
+                    async: false,
+                    success: function (data) {
+                      alert("SUCCESS");                      
+                      console.log(data); 
+                      // alert(data);
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                  });                                
+
+                  // Post to CouchDB
+                  var postURL = host + "/" + db + "/" + id;
+                  var postData = newIntent;
+                  var success = function (output) {               
+                    console.log(output);
+                  };
+                  var dataType = "json";
+                  // $.post(postURL, postData, success, dataType);     
+
+                  // Activate the registration file (should be done from register.php)   
+                  //window.open("register_delegate.html");
+                });
+              });
+            </script>            
+            <form class="form-horizontal">                
+                <h2 class="form-signin-heading text-center">Register a New Service</h2>                                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="title">Title</label>
+                    <div class="col-lg-10">                        
+                        <input id="title" class="form-control" type="text" placeholder="Title of the service in a few words" value="Subtract 3 x 3 Matrices"></input>
+                    </div>                                        
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="description">Description</label>
+                    <div class="col-lg-10">                        
+                        <input id="description" class="form-control" type="text" placeholder="Brief description of the service" value="Simple matrix arithmetic"></input>
+                    </div>                                        
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="action">Action</label>
+                    <div class="col-lg-10">                        
+                        <input id="action" class="form-control" type="text" placeholder="Verb/Noun as a URI (for ex: math/matrix)" value="math/matrix"></input>
+                    </div>                                        
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="type">Type</label>
+                    <div class="col-lg-10">                        
+                        <input id="type" class="form-control" type="text" placeholder="Valid MIME type your service handles" value="text/*"></input>
+                    </div>                                        
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label" for="upload">Upload Service Code</label>
+                  <div class="col-lg-10">
+                    <input id="upload" class="form-control" type="file"></input>
+                  </div>
+                </div>
+                <div class="form-actions">
+                    <input id="register" type="button" class="btn btn-primary" value="Register"></input>
+                </div>
+            </form>
+        </div> 
+        
+    </body>
+</html>

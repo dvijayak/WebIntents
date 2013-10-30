@@ -9,8 +9,13 @@ case $1 in
   )
   (
     cd examples
-    python -m SimpleHTTPServer &
+    python -m SimpleHTTPServer 8081 &
     echo $! > examples.pid
+  )
+  (
+    cd workspace
+    python -m SimpleHTTPServer &
+    echo $! > workspace.pid
   )
   (
     cd experiments

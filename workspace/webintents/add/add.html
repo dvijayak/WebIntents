@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <title>Add Objects</title>
+  <script src="/webintents/lib/webintents.js"></script>
+  <script src="/webintents/lib/events.js"></script>
+  <script src="/webintents/lib/common.js"></script>
+  <script>
+    attachEventListener(window, "load", function(e) {
+      var output = document.getElementById("output");
+      console.log(e.target);
+      
+      if(!!window.intent) {         
+        if(intent.data instanceof Array) {    
+          console.log(intent.data);      
+          var length = intent.data.length;          
+          var sum = 0;
+          var concat = "";
+          for (var i = 0; i < length; i++) {
+            var potentialNumber = parseInt(intent.data[i]);
+            if (!isNaN(potentialNumber)) {
+              sum += potentialNumber;     
+            }
+            else {
+              concat += intent.data[i];
+            }
+          }          
+          var result = [ sum.toString(), concat ];          
+          setText(output, result[0] + "\n" + result[1]); 
+          setTimeout(function() { window.close();}, 2000);        
+
+          attachEventListener(window, "beforeunload", function() {                         
+            window.intent.postResult(result);
+          });
+        }
+        else {          
+          setText(output, "Operation Failed");
+          setTimeout(function() { window.close();}, 2000);
+
+          attachEventListener(window, "unload", function() { 
+            window.intent.postResult([ "Operation Failed" ]);
+          });
+        }
+      }
+    }, false);  
+  
+  </script>
+  <body>
+    <h1>Object Summation</h1>    
+    <p>Here is the result of the addition of the inputted objects:</p>
+    <div id="output"></div>
+  </body>
+</html>

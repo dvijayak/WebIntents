@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="add.html" 
+      title="Add 3x3 Matrices" 
+      disposition="window|inline" />
+    </script>  
+  </head>
+
+
+  <body>
+    <h1>Service</h1>
+     <p>This is a web service we can use. It has registered its intent to be able to handle the "math/matrix" action for "text/*" datatypes.</p>      
+  </body>
+</html>
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="determinant.html" 
+      title="Compute 3x3 Matrix Determinant" 
+      disposition="window|inline" />
+    </script>  
+  </head>
+
+
+  <body>
+    <h1>Service</h1>
+     <p>This is a web service we can use. It has registered its intent to be able to handle the "math/matrix" action for "text/*" datatypes.</p>      
+  </body>
+</html>
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="inverse.html" 
+      title="Invert a 3x3 Matrix" 
+      disposition="window|inline" />
+    </script>  
+  </head>
+
+
+  <body>
+    <h1>Service</h1>
+     <p>This is a web service we can use. It has registered its intent to be able to handle the "math/matrix" action for "text/*" datatypes.</p>      
+  </body>
+</html>
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="multiply.html" 
+      title="Multiply 3x3 Matrices" 
+      disposition="window|inline" />
+    </script>  
+  </head>
+
+
+  <body>
+    <h1>Service</h1>
+     <p>This is a web service we can use. It has registered its intent to be able to handle the "math/matrix" action for "text/*" datatypes.</p>      
+  </body>
+</html>
+<!doctype html>
+<html>
+  <head>
+    <title>Intent: Matrix</title>
+    <script src="/lib/webintents.debug.js"></script>
+    <intent 
+      action="http://webintents.org/math/matrix" 
+      type="text/*" 
+      href="subtract.html" 
+      title="Subtract 3x3 Matrices" 
+      disposition="window|inline" />
+    </script>  
+  </head>
+
+
+  <body>
+    <h1>Service</h1>
+     <p>This is a web service we can use. It has registered its intent to be able to handle the "math/matrix" action for "text/*" datatypes.</p>      
+  </body>
+</html>

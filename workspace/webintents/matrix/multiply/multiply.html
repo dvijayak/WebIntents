@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <title>Multiply Matrices</title>
+  <script src="/webintents/lib/webintents.js"></script>
+  <script src="/webintents/lib/events.js"></script>
+  <script src="/webintents/lib/common.js"></script>
+  <script src="/webintents/lib/gl-matrix.js"></script>
+  <script>
+    attachEventListener(window, "load", function(e) {
+      var output = document.getElementById("output");
+      console.log(e.target);
+      
+      if(!!window.intent) {         
+        if(intent.data instanceof Array) {    
+          var data1 = intent.data[0],
+            data2 = intent.data[1];          
+          var length = (data1.length < data2.length) ? data1.length : data2.length;
+          var matrix1 = [];           
+          var matrix2 = [];          
+          for (var i = 0; i < length; i++) {
+            var element1 = parseInt(data1[i]),
+              element2 = parseInt(data2[i]);
+            if (!isNaN(element1)) {
+              matrix1.push(element1);
+            }
+            else {
+              matrix1.push(0);
+            }
+            if (!isNaN(element2)) {
+              matrix2.push(element2);
+            }
+            else {
+              matrix2.push(0);
+            }
+            
+          }                            
+          var sum = mat3.multiply(mat3.create(), matrix1, matrix2);          
+          var result = [ mat3.str(sum) ];          
+          setText(output, result[0]); 
+          setTimeout(function() { window.close();}, 2000);        
+
+          attachEventListener(window, "beforeunload", function() {                         
+            window.intent.postResult(result);
+          });
+        }
+        else {          
+          setText(output, "Operation Failed");
+          setTimeout(function() { window.close();}, 2000);
+
+          attachEventListener(window, "unload", function() { 
+            window.intent.postResult([ "Operation Failed" ]);
+          });
+        }
+      }
+    }, false);  
+  
+  </script>
+  <body>
+    <h1>Matrix Summation</h1>    
+    <p>Here is the result of the addition of the inputted matrices:</p>
+    <div id="output"></div>
+  </body>
+</html>
